@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './mathml.css';
 import MathML from './components/MathML';
@@ -75,19 +74,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Play with mathematical formula
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <MathML>
+      <MathML>
           <math display="block">
             <apply>
               <eq/>
@@ -137,7 +127,28 @@ function App() {
               <cn type="integer">0</cn>
             </apply>
           </math>
-        </MathML>
+        </MathML>        
+        <pre style={{ textAlign: 'left' }}>{`
+          SWAP sel is currently broken
+
+          Selecting parts
+          - red is selected
+          - mouse click to select numbers or symbols
+
+          Navigation
+          - ESC to select parent of current selection
+          - RIGHT ARROW select next child of current selection
+          - LEFT ARROW select
+
+          Changing math
+          - +/- on number (rational or natural)
+
+          Refactor
+          - ^ on natural number or symbol raise to power 1
+          - / on number divide by 1
+          - + on non number add 0
+          - * multiply by 1`}
+        </pre>
       </header>
     </div>
   );
