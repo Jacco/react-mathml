@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2650af8d12940f2d6351f3c8f0e66477",
+    "revision": "bb8b76575c1fbfb2a50eb9000645ac13",
     "url": "/react-mathml/index.html"
   },
   {
-    "revision": "d7899de29ef74f9db6af",
+    "revision": "e547fda0fe434edbd8ec",
     "url": "/react-mathml/static/css/main.fcbb93d7.chunk.css"
   },
   {
-    "revision": "feaf06f5f6991fe4aa8e",
-    "url": "/react-mathml/static/js/2.839e780e.chunk.js"
+    "revision": "7487481ac196f6a235c5",
+    "url": "/react-mathml/static/js/2.4c779ae0.chunk.js"
   },
   {
     "revision": "3ffb566c214cc8bb4cc0a69aefe6d02b",
-    "url": "/react-mathml/static/js/2.839e780e.chunk.js.LICENSE.txt"
+    "url": "/react-mathml/static/js/2.4c779ae0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "d7899de29ef74f9db6af",
-    "url": "/react-mathml/static/js/main.8ef4f3b7.chunk.js"
+    "revision": "e547fda0fe434edbd8ec",
+    "url": "/react-mathml/static/js/main.364bc23e.chunk.js"
   },
   {
     "revision": "c0076dad15b12019f861",
