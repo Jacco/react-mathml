@@ -12,9 +12,9 @@ export const MF = ({ expr: children, openSymbol, closeSymbol }) => {
     );
 };
 
-export const Intersperse = ({ expr: children, useBrackets, priority, symbol, path, onClick, opPath }) => {
+export const Intersperse = ({ expr: children, useBrackets, priority, symbol, path, onClick, opPath, selected }) => {
     return (
-        <mjx-mrow>
+        <mjx-mrow style={{ backgroundColor: selected ? 'red' : 'transparent' }}>
             {useBrackets && <MathOperator>(</MathOperator>}
             {children.reduce((a, v, i) => {
                 i &&
@@ -27,7 +27,7 @@ export const Intersperse = ({ expr: children, useBrackets, priority, symbol, pat
                     a.push(
                         <ApplyTemplate
                             key={`a-${i}`}
-                            p={priority}
+                            priority={priority}
                             expr={v}
                             path={`${path}.[op-${opPath}].${v.idx}`}
                             onClick={onClick}
@@ -40,18 +40,19 @@ export const Intersperse = ({ expr: children, useBrackets, priority, symbol, pat
     );
 };
 
-export const Binary = ({ expr: operands, newPriority, oldPriority, symbol, path, onClick, opPath }) => {
+export const Binary = ({ expr: operands, newPriority, oldPriority, symbol, path, onClick, opPath, selected }) => {
     return (
         <Intersperse
             useBrackets={
                 newPriority < oldPriority || (newPriority === oldPriority && symbol() === '-')
             }
-            level={newPriority}
+            priority={newPriority}
             symbol={symbol}
             expr={operands}
             path={path}
             onClick={onClick}
             opPath={opPath}
+            selected={selected}
         />
     );
 };

@@ -66,7 +66,7 @@ const MathML = ({ children }) => {
     const [id,] = useState((mathmlid++).toString());
     const [mathExpr, setMathExpr] = useState({});
     const [selectedPath, setSelectedPath] = useState('');
-    const [ctx, setCtx] = useState({});
+    const [ctx, setCtx] = useState(MathContext.default);
     const math = React.Children.only(children);
 
     useEffect(() => {
@@ -134,6 +134,8 @@ const MathML = ({ children }) => {
                 path = path.slice(0, -1).join('.');
                 const o = get(mathExpr, path);
                 //console.log(JSON.stringify(o), 'NEXT', next);
+                console.log(selectedPath.split('.').slice(0, -1).join('.') + '.'+ next);
+                console.log(o);
                 if (o.some(x => x.idx === next)) {
                     setSelectedPath(selectedPath.split('.').slice(0, -1).join('.') + '.'+ next);
                 };
@@ -170,6 +172,7 @@ const MathML = ({ children }) => {
                 }
             } else if (e.key === '^') {
                 let o = getPath(mathExpr, selectedPath);
+                console.log('split', selectedPath)
                 let idx = o.idx;
                 o = set(o, 'idx', 1);
                 const pwr = {
@@ -223,10 +226,11 @@ const MathML = ({ children }) => {
             <mjx-container jax='CHTML' display='true'>
                 <mjx-math display='true' class='MJX-TEX'>
                     <MathContext.Provider value={ctx}>
-                        <ApplyTemplate expr={mathExpr} priotiry={0} path='math' onClick={partClick} />
+                        <ApplyTemplate onClick={partClick} expr={mathExpr} priotiry={0} path='math' />
                     </MathContext.Provider>
                 </mjx-math>
             </mjx-container>
+            <div>selectedPath: {selectedPath}</div>
             <button
                 onClick={() => {
                     let path = selectedPath

@@ -1,8 +1,11 @@
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useContext } from 'react';
 import ApplyTemplate from './ApplyTemplate';
+import MathContext from './MathContext';
 
 const Power = ({ expr, priority, params, path, onClick }) => {
+    const ctx = useContext(MathContext);
+    const isSelected = ctx.selectedPath === path;
     const [base, exponent] = expr;
     const [va, setVA] = useState('0');
     const [baseNode, setBaseNode] = useState(null);
@@ -24,7 +27,7 @@ const Power = ({ expr, priority, params, path, onClick }) => {
         }
     }, [baseNode, superNode]);
     return (
-        <mjx-msup>
+        <mjx-msup style={{ backgroundColor: isSelected ? 'red' : 'transparent' }}>
             <ApplyTemplate
                 ref={measureBase}
                 priority={priority}

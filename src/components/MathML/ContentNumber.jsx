@@ -36,8 +36,9 @@ const RationalNumber = React.forwardRef(({ expr, path, ...rest }, ref) => {
         return () => unregisterActions(path, actions);
     }, [registerActions, unregisterActions, path]);
     const [numerator, sep, denominator] = expr;
+    const isSelected = ctx.selectedPath === path;
     return (
-        <mjx-mfrac ref={ref} space='4'>
+        <mjx-mfrac ref={ref} space='4' style={{ backgroundColor: isSelected ? 'red' : 'transparent' }}>
             <mjx-frac type='d'>
                 <mjx-num>
                     <mjx-nstrut />
@@ -90,7 +91,7 @@ const NaturalNumber = React.forwardRef(({ expr, p, path, ...rest }, ref) => {
         registerActions(path, actions);
         return () => unregisterActions(path, actions);
     }, [path, registerActions, unregisterActions]);
-    const isSelected = path.startsWith(ctx.selectedPath);
+    const isSelected = ctx.selectedPath === path;
     console.log('Number debug', expr);
     const [num] = expr;
     if (typeof num === 'string') {

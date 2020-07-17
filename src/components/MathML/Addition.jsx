@@ -1,10 +1,65 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import MathOperator from './MathOperator';
+import MathContext from './MathContext';
 import ApplyTemplate from './ApplyTemplate';
+import { set } from 'object-path-immutable';
+
+const Refactor_Simplify = (input) => {
+    const [operator, ...children] = input.children;
+    const noidx = children.map(x => { const y = JSON.parse(JSON.stringify(x)); delete y.idx; return y });
+    const chk = JSON.stringify(noidx[0]);
+    if (noidx.every(x => JSON.stringify(x) === chk)) {
+        // T + T + T = 3*T
+        const rpt = JSON.parse(JSON.stringify(children[0]));
+        rpt.idx = 2;
+        const onew = {
+            type: 'apply',
+            idx: input.idx,
+            children: [
+                {
+                    type: 'times'
+                },
+                {
+                    type: 'cn',
+                    attributes: { type: 'integer' },
+                    children: [noidx.length.toString()],
+                    idx: 1
+                },
+                rpt
+            ]
+        }
+        return onew;
+    } else if (noidx.some(x => x.type === 'apply' && x.children[0].type === 'plus')) {
+        console.log('PLUS')
+        // combine plus with plus
+        const pidx = noidx.findIndex(x => x.type === 'apply' && x.children[0].type === 'plus');
+        const plus = noidx[pidx];
+        const onew = [{ type: 'plus' }, ...noidx.slice(0,pidx), ...plus.children.slice(1), ...noidx.slice(pidx+1)].map((x, i) => { x.idx = i+1; return x; });
+        input = set(input, 'children', onew);
+        console.log(JSON.parse(JSON.stringify(input)))
+        return input;
+    } else if (false) {
+        // combine terms with same xyz powers (inlcudes x^0)
+
+    }
+    return input;
+};
 
 const Addition = ({ expr: operands, priority, path, onClick }) => {
+    const ctx = useContext(MathContext);
+    const registerActions = ctx.registerActions;
+    const unregisterActions = ctx.unregisterActions;        
+    useEffect(() => {
+        const actions = { 
+            '.': Refactor_Simplify
+        };
+        registerActions(path, actions);
+        return () => unregisterActions(path, actions);
+    }, [registerActions, unregisterActions, path]);
+    const isSelected = path === ctx.selectedPath;
+    console.log('ADDITION', priority)
     return (
-        <mjx-mrow>
+        <mjx-mrow style={{ backgroundColor: isSelected ? 'red' : 'transparent' }}>
             {priority > 2 && <MathOperator>(</MathOperator>}
             {operands.reduce((a, o, j) => {
                 const npath = `${path}.[add].${o.idx}`;

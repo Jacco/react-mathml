@@ -11,7 +11,7 @@ const variableMap = {
 const ContentIdentifier = React.forwardRef(({ expr, path, onClick, ...rest }, ref) => {
     const ctx = useContext(MathContext);
     const c = variableMap[expr];
-    const isSelected = path.startsWith(ctx.selectedPath);
+    const isSelected = ctx.selectedPath === path;
     console.log('*** Variable path', isSelected);
     console.log('path', path);
     console.log('sel ', ctx.selectedPath);
